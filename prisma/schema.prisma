@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id
+  username String @unique
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  duets Duet[]
+  words WordList[]
+
+  friends  User[] @relation("friends")
+  friendOf User[] @relation("friends") // Redundant, but Prismas schema validation requires it
+
+  blocked   User[] @relation("blocked")
+  blockedBy User[] @relation("blocked") // Redundant, but Prismas schema validation requires it
+
+  spectating Game[]
+
+  @@map("users")
+}
+
+model WordList {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  words String[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  username String
+  user     User   @relation(fields: [username], references: [username])
+
+  @@map("word_lists")
+}
+
+model City {
+  id       Int    @id @default(autoincrement())
+  name     String @unique
+  turns    Int
+  mistakes Int
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  choices     City[] @relation("choices")
+  connections City[] @relation("choices") // Redundant, but Prismas schema validation requires it
+  duets       Duet[]
+  games       Game[]
+
+  @@map("cities")
+}
+
+enum GameType {
+  CODENAMES
+  DUET
+  DEEP_UNDERCOVER
+  CUSTOM
+
+  @@map("game_types")
+}
+
+model Game {
+  id       Int     @id @default(autoincrement())
+  name     String  @unique
+  code     String?
+  password String?
+
+  type GameType
+
+  duetId Int  @map("duet_id")
+  duet   Duet @relation(fields: [duetId], references: [id])
+
+  cityId Int  @map("city_id")
+  city   City @relation(fields: [cityId], references: [id])
+
+  turns    Int
+  mistakes Int
+
+  words String[]
+
+  history Json[] @default([])
+  chat    Json[] @default([])
+
+  keycardSideA String[] @map("keycard_side_a")
+  keycardSideB String[] @map("keycard_side_b")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  spectators User[]
+
+  @@map("games")
+}
+
+model Duet {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  players User[]
+  games   Game[]
+  cities  City[]
+
+  @@map("duets")
+}

@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "outDir": "./dist",
+    "target": "ESNext"
+  },
+  "include": [
+    "seed.js"
+  ],
+}
