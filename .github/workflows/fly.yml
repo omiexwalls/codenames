@@ -29,7 +29,11 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: npm run migrate --if-present
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
       - run: npm run seed --if-present
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
       - run: npm test --if-present
 
   deploy:
