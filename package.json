@@ -7,7 +7,9 @@
     "build": "remix build",
     "dev": "remix dev --manual",
     "start": "remix-serve ./build/index.js",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "migrate": "npx prisma migrate dev --preview-feature",
+    "seed": "npx prisma db seed --preview-feature"
   },
   "dependencies": {
     "@prisma/client": "^5.7.0",
