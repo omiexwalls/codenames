@@ -7,11 +7,10 @@
     "build": "remix build",
     "dev": "remix dev --manual",
     "start": "remix-serve ./build/index.js",
-    "typecheck": "tsc",
-    "migrate": "npx prisma migrate dev --preview-feature",
-    "seed": "npx prisma db seed --preview-feature"
+    "typecheck": "tsc"
   },
   "dependencies": {
+    "@clerk/remix": "^3.1.9",
     "@prisma/client": "^5.7.0",
     "@remix-run/css-bundle": "^2.3.1",
     "@remix-run/node": "^2.3.1",
@@ -30,6 +29,7 @@
     "@types/react-dom": "^18.2.7",
     "eslint": "^8.38.0",
     "prisma": "^5.7.0",
+    "remix-flat-routes": "0.6.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.1.6"
   },
