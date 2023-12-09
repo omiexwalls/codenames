@@ -1,41 +1,41 @@
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from '@remix-run/node';
+import { Button } from '~/components/ui/button';
+import { SignedIn, SignedOut } from '@clerk/remix';
+import { NavLink } from '@remix-run/react';
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: 'New Remix App' },
+    { name: 'description', content: 'Welcome to Remix!' },
   ];
 };
 
 export default function Index() {
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
+    <div className="flex flex-col space-y-4 justify-center items-center h-screen w-screen">
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+        Codenames
+      </h1>
+      <SignedOut>
+        <div className="flex space-x-4">
+          <NavLink to="/sign-in">
+            <Button variant="outline">Sign In</Button>
+          </NavLink>
+          <NavLink to="/sign-up">
+            <Button
+              variant="default"
+              className="bg-primary/90 hover:bg-primary/90"
+            >
+              Sign Up
+            </Button>
+          </NavLink>
+        </div>
+      </SignedOut>
+      <SignedIn>
+        <NavLink to="/play">
+          <Button variant="default">Play</Button>
+        </NavLink>
+      </SignedIn>
     </div>
   );
 }
