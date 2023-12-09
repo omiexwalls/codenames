@@ -30,12 +30,6 @@ COPY --link . .
 # Build application
 RUN npm run build
 
-# Migrate database
-RUN npm run migrate
-
-# Seed database
-RUN npm run seed
-
 # Remove development dependencies
 RUN npm prune --omit=dev
 
