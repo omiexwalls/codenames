@@ -5,7 +5,7 @@ export default function SignUpPage() {
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
         Codenames
       </h1>
-      <SignUp signInUrl={'/sign-in'} />
+      <SignUp signInUrl={'/sign-in'} afterSignUpUrl={'/after-sign-up'} />
     </div>
   );
 }
